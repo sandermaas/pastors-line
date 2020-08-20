@@ -3,10 +3,10 @@ import { api } from '../../../common/services'
 import actions from './actions'
 
 abstract class contactsOperations {
-    public static fetchContacts = () => (dispatch: any, getState: any) => {
+    public static fetchContacts = () => (dispatch: any) => {
         dispatch(actions.fetchContacts())
-        api.get(Endpoints.Contacts).then(contacts => {
-            dispatch(actions.fetchContactsSuccess(contacts))
+        api.get(Endpoints.Contacts).then(data => {
+            dispatch(actions.fetchContactsSuccess(data))
         }).catch(error => {
             dispatch(actions.fetchContactsFailed())
         })

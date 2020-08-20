@@ -1,21 +1,63 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import Modal from 'react-bootstrap/Modal'
-import { ModalContent } from '../modals'
+import Spinner from 'react-bootstrap/Spinner'
+import Table from 'react-bootstrap/Table'
+import { IContactsData } from '../../common/interfaces'
+import { contactsOperations } from '../../store/modules/contacts'
+import { ModalsHeader } from '../modals'
 
 interface IModalAStateProps {
+    contactsData: IContactsData
+    fetchingContacts: boolean
     isOpen: boolean
 }
-type IModalAProps = IModalAStateProps
+interface IModalADispatchProps {
+    fetchContacts: () => void
+}
+type IModalAProps = IModalAStateProps & IModalADispatchProps
 
-const ModalA: React.FunctionComponent<IModalAProps> = ({ isOpen }) => {
+const ModalA: React.FunctionComponent<IModalAProps> = ({ contactsData, fetchingContacts, isOpen, fetchContacts }) => {
+    console.log(fetchingContacts)
+    console.log(contactsData)
+
+    useEffect(() => {
+        fetchContacts()
+    }, [fetchContacts])
+
     return (
-        <Modal show={isOpen}>
-            <Modal.Header>
-                <Modal.Title>A</Modal.Title>
-            </Modal.Header>
+        <Modal show={isOpen} size="lg">
+            <ModalsHeader title="A" />
             <Modal.Body>
-                <ModalContent />
+                {fetchingContacts
+                    ? <Spinner animation="border" role="status">
+                        <span className="sr-only">Loading...</span>
+                    </Spinner>
+                    : <Table>
+                        <thead>
+                            <tr>
+                                <th>Last Name</th>
+                                <th>First Name</th>
+                                <th>Country</th>
+                                <th>Email</th>
+                                <th>Phone Number</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {contactsData.contacts_ids.map(id => {
+                                return (
+                                    <tr>
+                                        <td>{contactsData.contacts[id].last_name}</td>
+                                        <td>{contactsData.contacts[id].first_name}</td>
+                                        <td>{contactsData.contacts[id].country_id}</td>
+                                        <td>{contactsData.contacts[id].email}</td>
+                                        <td>{contactsData.contacts[id].phone_number}</td>
+                                    </tr>
+                                )
+                            })}
+                        </tbody>
+                    </Table>
+                }
             </Modal.Body>
         </Modal>
     )
@@ -29,8 +71,16 @@ const ModalA: React.FunctionComponent<IModalAProps> = ({ isOpen }) => {
 //     }
 // }
 
-const mapStateToProps = (state: any) =>({
+const mapStateToProps = (state: any): IModalAStateProps =>({
+    contactsData: state.contactsState.contacts.data,
+    fetchingContacts: state.contactsState.contacts.fetching,
     isOpen: state.modalsState.modalA
 })
 
-export default connect(mapStateToProps)(ModalA)
+const mapDispatchToProps = (dispatch: any): IModalADispatchProps => {
+    return {
+        fetchContacts: () => dispatch(contactsOperations.fetchContacts())
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ModalA)

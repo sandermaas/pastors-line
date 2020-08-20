@@ -1,4 +1,5 @@
 import { AnyAction } from 'redux'
+import { IContactsData } from '../../../common/interfaces'
 import types from './types'
 
 abstract class contactsActionCreators {
@@ -6,10 +7,10 @@ abstract class contactsActionCreators {
         type: types.Fetch
     })
 
-    public static fetchContactsSuccess = (contacts: any): AnyAction => ({
+    public static fetchContactsSuccess = (data: IContactsData): AnyAction => ({
         type: types.FetchSuccess,
         payload: {
-            contacts
+            data
         }
     })
 

@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import Modal from 'react-bootstrap/Modal'
-import { ModalContent } from '../modals'
+import { ModalsHeader } from '../modals'
 
 interface IModalBStateProps {
     isOpen: boolean
@@ -10,12 +10,10 @@ type IModalBProps = IModalBStateProps
 
 const ModalB: React.FunctionComponent<IModalBProps> = ({ isOpen }) => {
     return (
-        <Modal show={isOpen}>
-            <Modal.Header>
-                <Modal.Title>B</Modal.Title>
-            </Modal.Header>
+        <Modal show={isOpen} size="lg">
+            <ModalsHeader title="B" />
             <Modal.Body>
-                <ModalContent />
+                
             </Modal.Body>
         </Modal>
     )

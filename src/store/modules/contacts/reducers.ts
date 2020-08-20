@@ -2,7 +2,12 @@ import { AnyAction, combineReducers } from 'redux'
 import types from './types'
 
 const initialState = {
-    fetching: false
+    fetching: false,
+    data: {
+        contacts: {},
+        contacts_ids: [],
+        total: 0
+    }
 }
 
 const contacts = (state = initialState, action: AnyAction) => {
@@ -13,7 +18,7 @@ const contacts = (state = initialState, action: AnyAction) => {
         }
         case types.FetchSuccess: return {
             ...state,
-            contacts: action.payload.contacts,
+            data: action.payload.data,
             fetching: false
         }
         case types.FetchFailed: return {

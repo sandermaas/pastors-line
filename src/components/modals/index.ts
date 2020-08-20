@@ -1,9 +1,9 @@
 import ModalA from './ModalA'
 import ModalB from './ModalB'
-import ModalContent from './ModalContent'
+import ModalsHeader from './ModalsHeader'
 
 export {
     ModalA,
     ModalB,
-    ModalContent
+    ModalsHeader
 }
