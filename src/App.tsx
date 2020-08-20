@@ -1,8 +1,11 @@
 import React from 'react'
+import TopNavigation from './components/TopNavigation'
 
 const App: React.FunctionComponent = () => {
     return (
-        <p>APP</p>
+        <React.Fragment>
+            <TopNavigation />
+        </React.Fragment>
     )
 }
 
