@@ -2,12 +2,16 @@ import { AnyAction } from 'redux'
 import types from './types'
 
 abstract class modalsActionCreators {
-    public static openModalA = (): AnyAction => ({
-        type: types.OpenA
-    })
+    // public static openModalA = (): AnyAction => ({
+    //     type: types.OpenA
+    // })
 
-    public static openModalB = (): AnyAction => ({
-        type: types.OpenB
+    // public static openModalB = (): AnyAction => ({
+    //     type: types.OpenB
+    // })
+
+    public static openModalC = (): AnyAction => ({
+        type: types.OpenC
     })
 
     public static closeModals = (): AnyAction => ({

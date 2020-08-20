@@ -13,12 +13,14 @@ const MainButtons: React.FunctionComponent<IMainButtonsProps> = ({ openModal }) 
     return (
         <main className="d-flex flex-column">
             <Button 
+                href="/A"
                 variant="primary"
-                onClick={() => openModal(ModalType.A)}
+                // onClick={() => openModal(ModalType.A)}
             >A</Button>
             <Button 
+                href="/B"
                 variant="secondary"
-                onClick={() => openModal(ModalType.B)}
+                // onClick={() => openModal(ModalType.B)}
             >B</Button>
         </main>
     )

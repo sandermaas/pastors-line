@@ -1,4 +1,5 @@
 export enum ModalType {
     A,
-    B
+    B,
+    C
 }

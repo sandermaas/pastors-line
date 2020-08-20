@@ -1,18 +1,26 @@
 import React from 'react'
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom"
 import { TopNavigation } from './components/navigation'
 import { MainButtons } from './components/main'
-import { ModalA, ModalB } from './components/modals'
+import { ModalA, ModalB, ModalC } from './components/modals'
 
 const App: React.FunctionComponent = () => {
     return (
-        <React.Fragment>
+        <Router>
             <TopNavigation />
-
             <MainButtons />
-
-            <ModalA />
-            <ModalB />
-        </React.Fragment>
+        
+            <Switch>
+                <Route path="/A">
+                    <ModalA />
+                    <ModalC />
+                </Route>
+                <Route path="/B">
+                    <ModalB />
+                    <ModalC />
+                </Route>
+            </Switch>
+        </Router>
     )
 }
 
