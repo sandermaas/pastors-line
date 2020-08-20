@@ -1,6 +1,2 @@
-import { combineReducers } from 'redux'
-import { modalsReducer } from './modals'
-
-export default combineReducers({
-    modalsReducer
-})
+export { default as contactsState } from './contacts'
+export { default as modalsState } from './modals'

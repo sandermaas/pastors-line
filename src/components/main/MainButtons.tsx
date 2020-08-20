@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import Button from 'react-bootstrap/Button'
 import { ModalType } from '../../common/enums'
-import { modalsActionCreators } from '../../store/modules/modals'
+import { modalsOperations } from '../../store/modules/modals'
 
 interface IMainButtonsDispatchProps {
     openModal: (modalType: ModalType) => void
@@ -26,7 +26,7 @@ const MainButtons: React.FunctionComponent<IMainButtonsProps> = ({ openModal }) 
 
 const mapDispatchToProps = (dispatch: any): IMainButtonsDispatchProps => {
     return {
-        openModal: (modalType: ModalType) => dispatch(modalsActionCreators.openModal(modalType))
+        openModal: (modalType: ModalType) => dispatch(modalsOperations.openModal(modalType))
     }
 }
 

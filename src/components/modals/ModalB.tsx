@@ -4,13 +4,13 @@ import Modal from 'react-bootstrap/Modal'
 import { ModalContent } from '../modals'
 
 interface IModalBStateProps {
-    isOpenB: boolean
+    isOpen: boolean
 }
 type IModalBProps = IModalBStateProps
 
-const ModalB: React.FunctionComponent<IModalBProps> = ({ isOpenB }) => {
+const ModalB: React.FunctionComponent<IModalBProps> = ({ isOpen }) => {
     return (
-        <Modal show={isOpenB}>
+        <Modal show={isOpen}>
             <Modal.Header>
                 <Modal.Title>B</Modal.Title>
             </Modal.Header>
@@ -21,10 +21,8 @@ const ModalB: React.FunctionComponent<IModalBProps> = ({ isOpenB }) => {
     )
 }
 
-const mapStateToProps = (state: any): IModalBStateProps => {
-    return {
-        ...state.modalsReducer
-    }
-}
+const mapStateToProps = (state: any) =>({
+    isOpen: state.modalsState.modalB
+})
 
 export default connect(mapStateToProps)(ModalB)

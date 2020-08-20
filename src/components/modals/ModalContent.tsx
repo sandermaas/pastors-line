@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import Button from 'react-bootstrap/Button'
 import { ModalType } from '../../common/enums'
-import { modalsActionCreators } from '../../store/modules/modals'
+import { modalsOperations } from '../../store/modules/modals'
 
 interface IModalContentDispatchProps {
     closeModals: () => void,
@@ -22,8 +22,8 @@ const ModalContent: React.FunctionComponent<IModalContentProps> = ({ closeModals
 
 const mapDispatchToProps = (dispatch: any): IModalContentDispatchProps => {
     return {
-        closeModals: () => dispatch(modalsActionCreators.closeModals()),
-        openModal: (modalType: ModalType) => dispatch(modalsActionCreators.openModal(modalType))
+        closeModals: () => dispatch(modalsOperations.closeModals()),
+        openModal: (modalType: ModalType) => dispatch(modalsOperations.openModal(modalType))
     }
 }
 
