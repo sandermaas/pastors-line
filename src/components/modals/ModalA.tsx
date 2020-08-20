@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
+import { Scrollbars } from 'react-custom-scrollbars'
 import Modal from 'react-bootstrap/Modal'
 import Spinner from 'react-bootstrap/Spinner'
 import Table from 'react-bootstrap/Table'
@@ -14,26 +15,28 @@ interface IModalAStateProps {
 }
 interface IModalADispatchProps {
     fetchContacts: () => void
+    fetchNextContacts: () => void
 }
 type IModalAProps = IModalAStateProps & IModalADispatchProps
 
-const ModalA: React.FunctionComponent<IModalAProps> = ({ contactsData, fetchingContacts, isOpen, fetchContacts }) => {
-    console.log(fetchingContacts)
-    console.log(contactsData)
-
+const ModalA: React.FunctionComponent<IModalAProps> = ({ contactsData, fetchingContacts, isOpen, fetchContacts, fetchNextContacts }) => {
     useEffect(() => {
-        fetchContacts()
-    }, [fetchContacts])
+        isOpen && fetchContacts()
+    }, [isOpen, fetchContacts])
+
+    const handleScroll = (event: React.UIEvent) => {
+        const target = event.target as Element
+        if (target.scrollTop >= target.scrollHeight - target.clientHeight) {
+            fetchNextContacts()
+        }
+    }
 
     return (
         <Modal show={isOpen} size="lg">
             <ModalsHeader title="A" />
             <Modal.Body>
-                {fetchingContacts
-                    ? <Spinner animation="border" role="status">
-                        <span className="sr-only">Loading...</span>
-                    </Spinner>
-                    : <Table>
+                <Scrollbars onScroll={handleScroll} style={{ height: '25em' }}>
+                    <Table>
                         <thead>
                             <tr>
                                 <th>Last Name</th>
@@ -46,7 +49,7 @@ const ModalA: React.FunctionComponent<IModalAProps> = ({ contactsData, fetchingC
                         <tbody>
                             {contactsData.contacts_ids.map(id => {
                                 return (
-                                    <tr>
+                                    <tr key={id}>
                                         <td>{contactsData.contacts[id].last_name}</td>
                                         <td>{contactsData.contacts[id].first_name}</td>
                                         <td>{contactsData.contacts[id].country_id}</td>
@@ -55,21 +58,23 @@ const ModalA: React.FunctionComponent<IModalAProps> = ({ contactsData, fetchingC
                                     </tr>
                                 )
                             })}
+                            {fetchingContacts
+                                ? <tr>
+                                    <td colSpan={5}>
+                                        <Spinner animation="border" role="status" style={{ display: 'flex', margin: 'auto' }}>
+                                            <span className="sr-only">Loading...</span>
+                                        </Spinner>
+                                    </td>
+                                </tr>
+                                : null
+                            }
                         </tbody>
                     </Table>
-                }
+                </Scrollbars>
             </Modal.Body>
         </Modal>
     )
 }
-
-// const mapStateToProps = (state: any): IModalAStateProps => {
-//     console.log('MODAL A STATE')
-//     console.log(state)
-//     return {
-//         ...state.modalsReducer
-//     }
-// }
 
 const mapStateToProps = (state: any): IModalAStateProps =>({
     contactsData: state.contactsState.contacts.data,
@@ -79,7 +84,8 @@ const mapStateToProps = (state: any): IModalAStateProps =>({
 
 const mapDispatchToProps = (dispatch: any): IModalADispatchProps => {
     return {
-        fetchContacts: () => dispatch(contactsOperations.fetchContacts())
+        fetchContacts: () => dispatch(contactsOperations.fetchContacts()),
+        fetchNextContacts: () => dispatch(contactsOperations.fetchNextContacts())
     }
 }
 

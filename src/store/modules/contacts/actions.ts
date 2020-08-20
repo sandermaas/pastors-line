@@ -17,6 +17,14 @@ abstract class contactsActionCreators {
     public static fetchContactsFailed = (): AnyAction => ({
         type: types.FetchFailed
     })
+
+    public static increasePage = ():AnyAction => ({
+        type: types.IncreasePage
+    })
+
+    public static resetPage = (): AnyAction => ({
+        type: types.ResetPage
+    })
 }
 
 export default contactsActionCreators
