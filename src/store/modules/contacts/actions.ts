@@ -1,5 +1,5 @@
 import { AnyAction } from 'redux'
-import { IContactsData } from '../../../common/interfaces'
+import { IContactsData, IContactsParams } from '../../../common/interfaces'
 import types from './types'
 
 abstract class contactsActionCreators {
@@ -18,12 +18,15 @@ abstract class contactsActionCreators {
         type: types.FetchFailed
     })
 
-    public static increasePage = ():AnyAction => ({
-        type: types.IncreasePage
+    public static resetState = (): AnyAction => ({
+        type: types.ResetState
     })
 
-    public static resetPage = (): AnyAction => ({
-        type: types.ResetPage
+    public static updateParams = (params: IContactsParams): AnyAction => ({
+        type: types.UpdateParams,
+        payload: {
+            params
+        }
     })
 }
 

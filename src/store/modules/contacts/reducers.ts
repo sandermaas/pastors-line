@@ -1,7 +1,7 @@
 import { AnyAction, combineReducers } from 'redux'
 import types from './types'
 
-const initialState = {
+const initialContactsState = {
     data: {
         contacts: {},
         contacts_ids: [],
@@ -10,7 +10,7 @@ const initialState = {
     fetching: false
 }
 
-const contacts = (state = initialState, action: AnyAction) => {
+const contacts = (state = initialContactsState, action: AnyAction) => {
     switch (action.type) {
         case types.Fetch: return {
             ...state,
@@ -32,22 +32,24 @@ const contacts = (state = initialState, action: AnyAction) => {
             ...state,
             fetching: false
         }
-        case types.ResetPage: return state = initialState
+        case types.ResetState: return state = initialContactsState
         default: return state
     }
 }
 
-const page = (state = 1, action: AnyAction) => {
+const params = (state = { page: 1 }, action: AnyAction) => {
     switch (action.type) {
-        case types.IncreasePage: return state = state + 1
-        case types.ResetPage: return state = 1
+        case types.UpdateParams: return {
+            ...state,
+            ...action.payload.params
+        }
         default: return state
     }
 }
 
 const reducer = combineReducers({
     contacts,
-    page
+    params
 })
 
 export default reducer

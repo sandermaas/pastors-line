@@ -5,13 +5,13 @@ import actions from './actions'
 
 abstract class contactsOperations {
     public static fetchContacts = (params?: IContactsParams) => (dispatch: any, getState: any) => {
-        dispatch(actions.resetPage())
-        dispatch(actions.fetchContacts())
-        let parameters = {
+        dispatch(actions.resetState())
+        dispatch(actions.updateParams({ 
             ...params,
-            page: getState().contactsState.page
-        }
-        api.get(Endpoints.Contacts, parameters).then(data => {
+            page: 1
+        }))
+        dispatch(actions.fetchContacts())
+        api.get(Endpoints.Contacts, getState().contactsState.params).then(data => {
             dispatch(actions.fetchContactsSuccess(data))
         }).catch(error => {
             dispatch(actions.fetchContactsFailed())
@@ -19,13 +19,12 @@ abstract class contactsOperations {
     }
 
     public static fetchNextContacts = (params?: IContactsParams) => (dispatch: any, getState: any) => {
-        dispatch(actions.increasePage())
-        dispatch(actions.fetchContacts())
-        let parameters = {
+        dispatch(actions.updateParams({
             ...params,
-            page: getState().contactsState.page
-        }
-        api.get(Endpoints.Contacts, parameters).then(data => {
+            page: getState().contactsState.params.page + 1
+        }))
+        dispatch(actions.fetchContacts())
+        api.get(Endpoints.Contacts, getState().contactsState.params).then(data => {
             dispatch(actions.fetchContactsSuccess(data))
         }).catch(error => {
             dispatch(actions.fetchContactsFailed())

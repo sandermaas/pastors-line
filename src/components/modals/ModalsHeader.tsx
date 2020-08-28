@@ -13,13 +13,13 @@ const ModalsHeader: React.FunctionComponent<IModalsHeaderProps> = ({ title }) =>
             <Modal.Title>{title}</Modal.Title>
             <Nav justify>
                 <Nav.Item>
-                    <Button href="/A">All Contacts</Button>
+                    <Button href="/A" variant="primary">All Contacts</Button>
                 </Nav.Item>
                 <Nav.Item>
-                    <Button href="/B">US Contacts</Button>
+                    <Button href="/B" variant="secondary">US Contacts</Button>
                 </Nav.Item>
                 <Nav.Item>
-                    <Button href="/">Close</Button>
+                    <Button href="/" variant="outline-primary">Close</Button>
                 </Nav.Item>
             </Nav>
         </Modal.Header>

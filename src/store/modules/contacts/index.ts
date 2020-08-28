@@ -1,11 +1,7 @@
 import reducer from './reducers'
 
-import contactsOperations from './operations'
-import contactsTypes from './types'
-
-export {
-    contactsOperations,
-    contactsTypes
-}
+export { default as contactsSelectors } from './selectors'
+export { default as contactsOperations } from './operations'
+export { default as contactsTypes } from './types'
 
 export default reducer

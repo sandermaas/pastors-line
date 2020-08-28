@@ -2,13 +2,14 @@ import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import { Scrollbars } from 'react-custom-scrollbars'
 import Modal from 'react-bootstrap/Modal'
+import { IContactsParams } from '../../common/interfaces'
 import { contactsOperations } from '../../store/modules/contacts'
-import { ModalsHeader } from '../modals'
+import { ModalsHeader, ModalsSearch, ModalFooter } from '../modals'
 import { ContactsOverview } from '../contacts'
 
 interface IModalADispatchProps {
-    fetchContacts: () => void
-    fetchNextContacts: () => void
+    fetchContacts: (params?: IContactsParams) => void
+    fetchNextContacts: (params?: IContactsParams) => void
 }
 type IModalAProps = IModalADispatchProps
 
@@ -16,6 +17,12 @@ const ModalA: React.FunctionComponent<IModalAProps> = ({ fetchContacts, fetchNex
     useEffect(() => {
         fetchContacts()
     }, [fetchContacts])
+
+    const handleSearch = (query: string) => {
+        fetchContacts({
+            query
+        })
+    }
 
     const handleScroll = (event: React.UIEvent) => {
         const target = event.target as Element
@@ -28,18 +35,20 @@ const ModalA: React.FunctionComponent<IModalAProps> = ({ fetchContacts, fetchNex
         <Modal show size="lg">
             <ModalsHeader title="A" />
             <Modal.Body>
-                <Scrollbars onScroll={handleScroll} style={{ height: '25em' }}>
+                <ModalsSearch onSearch={handleSearch} />
+                <Scrollbars onScroll={handleScroll} style={{ height: '18em', marginTop: '1em' }}>
                     <ContactsOverview />
                 </Scrollbars>
             </Modal.Body>
+            <ModalFooter />
         </Modal>
     )
 }
 
 const mapDispatchToProps = (dispatch: any): IModalADispatchProps => {
     return {
-        fetchContacts: () => dispatch(contactsOperations.fetchContacts()),
-        fetchNextContacts: () => dispatch(contactsOperations.fetchNextContacts())
+        fetchContacts: (params?: IContactsParams) => dispatch(contactsOperations.fetchContacts(params)),
+        fetchNextContacts: (params?: IContactsParams) => dispatch(contactsOperations.fetchNextContacts(params))
     }
 }
 

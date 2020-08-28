@@ -2,26 +2,21 @@ import React from 'react'
 import { connect } from 'react-redux'
 import Table from 'react-bootstrap/Table'
 import Spinner from 'react-bootstrap/Spinner'
-import { ModalType } from '../../common/enums'
 import { IContactsData, IContact } from '../../common/interfaces'
 import { modalsOperations } from '../../store/modules/modals'
-// import { contactsOperations } from '../../store/modules/contacts'
 
 interface IContactsOverviewStateProps {
     contactsData: IContactsData
     fetchingContacts: boolean
 }
 interface IContactsOverviewDispatchProps {
-    openModal: (modalType: ModalType) => void
+    openModalC: (contact: IContact) => void
 }
 type IContactsOverviewProps = IContactsOverviewStateProps & IContactsOverviewDispatchProps
 
-const ContactsOverview: React.FunctionComponent<IContactsOverviewProps> = ({ contactsData, fetchingContacts, openModal }) => {
-    const handleContactClick = (event: React.MouseEvent, contact: IContact) => {
-        console.log('HANDLE CONTACT CLICK')
-        console.log(event)
-        console.log(contact)
-        openModal(ModalType.C)
+const ContactsOverview: React.FunctionComponent<IContactsOverviewProps> = ({ contactsData, fetchingContacts, openModalC }) => {
+    const handleContactClick = (contact: IContact) => {
+        openModalC(contact)
     }
     
     return (
@@ -40,7 +35,7 @@ const ContactsOverview: React.FunctionComponent<IContactsOverviewProps> = ({ con
                         <tr key={id}>
                             <td>
                                 <a 
-                                    onClick={(e) => handleContactClick(e, contactsData.contacts[id])}
+                                    onClick={() => handleContactClick(contactsData.contacts[id])}
                                     style={{ cursor: 'pointer' }}
                                 >
                                     {`${contactsData.contacts[id].last_name} ${contactsData.contacts[id].first_name}`}
@@ -74,7 +69,7 @@ const mapStateToProps = (state: any): IContactsOverviewStateProps => ({
 
 const mapDispatchToProps = (dispatch: any): IContactsOverviewDispatchProps => {
     return {
-        openModal: (modalType: ModalType) => dispatch(modalsOperations.openModal(modalType))
+        openModalC: (contact: IContact) => dispatch(modalsOperations.openModalC(contact))
     }
 }
 

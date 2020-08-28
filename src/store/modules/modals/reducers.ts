@@ -1,37 +1,22 @@
 import { AnyAction, combineReducers } from 'redux'
 import types from './types'
 
-// const modalA = (state = false, action: AnyAction) => {
-//     switch (action.type) {
-//         case types.OpenA: return true
-//         case types.OpenB: return false
-//         case types.Close: return false
-//         default: return state
-//     }
-// }
-
-// const modalB = (state = false, action: AnyAction) => {
-//     switch (action.type) {
-//         case types.OpenA: return false
-//         case types.OpenB: return true
-//         case types.Close: return false
-//         default: return state
-//     }
-// }
-
-const modalC = (state = false, action: AnyAction) => {
-    console.log('REDUCER MODAL C')
-    console.log(state, action)
+const modalC = (state = {
+    open: false
+}, action: AnyAction) => {
     switch (action.type) {
-        case types.OpenC: return true
-        case types.Close: return false
+        case types.OpenC: return {
+            contact: action.payload.contact,
+            open: true
+        }
+        case types.Close: return {
+            open: false
+        }
         default: return state
     }
 }
 
 const reducer = combineReducers({
-    // modalA,
-    // modalB,
     modalC
 })
 
