@@ -1,0 +1,6 @@
+export { default as ModalA } from './ModalA'
+export { default as ModalB } from './ModalB'
+export { default as ModalC } from './ModalC' 
+export { default as ModalFooter } from './ModalsFooter'
+export { default as ModalsHeader } from './ModalsHeader'
+export { default as ModalsSearch } from './ModalsSearch'
